@@ -5,23 +5,42 @@ using UnityEngine;
 public class PipeController : MonoBehaviour
 {
     public float moveSpeed;
-    private bool _started = true;
-    public void randPos()
+    public float lifeCycle;
+
+    private float _timer;
+    private Transform _parentTransform;
+    //private bool _moving = true;
+
+    private void Awake()
     {
-        //[-0.74,4.31]
-        float randY = Random.Range(-0.74f, 4.31f);
-        transform.position = new Vector3(transform.position.x, randY, transform.position.z);
+        //_parentTransform = gameObject.transform.parent;
+        //ResetPos();
     }
 
-    public void setStarted(bool started)
+
+    private void OnEnable()
     {
-        _started = started;
+        _parentTransform = gameObject.transform.parent;
+        _timer = lifeCycle;
+        ResetPos();
+        //_moving = true;
+    }
+    public void ResetPos()
+    {
+        //[-0.74,4.31]
         
+        float randY = Random.Range(-0.74f, 4.31f);
+        transform.position = new Vector3(_parentTransform.position.x, randY, _parentTransform.position.z);
     }
     
     private void FixedUpdate()
     {
-        if (!_started) return;
+        _timer -= Time.fixedDeltaTime;
+        if(_timer < 0)
+        {
+            //gameObject.SetActive(false);
+            PipePool.instance.ReturnPool(this.gameObject);
+        }
         transform.Translate(-0.03f * moveSpeed, 0, 0);
     }
 

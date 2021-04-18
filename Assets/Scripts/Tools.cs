@@ -18,11 +18,11 @@ public class Tools
         }
     }
 
-    public void ShowUIObj(GameObject obj)
+    public void ShowUIObj(GameObject obj, float time = 0.5f)
     {
         obj.SetActive(true);
         obj.GetComponent<CanvasGroup>().alpha = 0;
-        obj.GetComponent<UIManager>().ShowUI();
+        obj.GetComponent<UIManager>().ShowUI(time);
     }
 
     public void HideUIObj(GameObject obj)

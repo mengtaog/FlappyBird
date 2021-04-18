@@ -10,33 +10,20 @@ public class PipesManager : MonoBehaviour
     private bool _started = false;
     private float _timer;
     private List<GameObject> _pipes = new List<GameObject>();
-    // Start is called before the first frame update
-    public void CreateSinglePipe()
+
+    public void GenerateNewPipe()
     {
-        GameObject newPipe = GameObject.Instantiate(prefab, Pipes.transform);
-        newPipe.GetComponent<PipeController>().randPos();
-        //Destroy(newPipe, 5);
-        _pipes.Add(newPipe);
+        GameObject newPipe = PipePool.instance.GetFromPool();
     }
 
     public void Stop()
     {
-        _started = false;
-        foreach (var pipe in _pipes)
-        {
-            pipe.GetComponent<PipeController>().setStarted(false);
-            
-        }
+        //Time.timeScale = 0f;
     }
 
     public void Continue()
     {
-        _started = true;
-        foreach (var pipe in _pipes)
-        {
-            pipe.GetComponent<PipeController>().setStarted(true);
-            
-        }
+        Time.timeScale = 1f;
     }
 
     private void Start()
@@ -55,7 +42,7 @@ public class PipesManager : MonoBehaviour
         _timer -= Time.deltaTime;
         if(_timer <= 0)
         {
-            CreateSinglePipe();
+            GenerateNewPipe();
             _timer = generationGap;
         }
         

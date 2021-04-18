@@ -7,9 +7,10 @@ public class UIManager : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
 
-    public void ShowUI()
+    public void ShowUI(float time = 0.5f)
     {
-        canvasGroup.DOFade(1, 0.5f);
+        //canvasGroup.alpha = Mathf.Lerp(0, 1, 0.5f);
+        canvasGroup.DOFade(1, time);
     } 
 
     public void HideUI()

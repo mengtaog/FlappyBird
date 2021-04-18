@@ -63,12 +63,12 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         if (_procedure == GameProcedure.gameover) return;
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
         _procedure = GameProcedure.gameover;
         background.GetComponent<BackgroundController>().Stop();
         pipes.GetComponent<PipesManager>().Stop();
         land.GetComponent<BackgroundController>().Stop();
-        Tools.Instance.ShowUIObj(gameover);
+        Tools.Instance.ShowUIObj(gameover, 0f);
         int score = int.Parse(scoreText.text);
         if(score < 5)
         {
@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene("GameScene");
+        Time.timeScale = 1.0f;
     }
 
     public void GainScore()
